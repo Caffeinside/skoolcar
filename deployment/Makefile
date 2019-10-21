@@ -16,7 +16,7 @@ download-robocarstore-rpi-image: ../images/robocarstore_dk310_stretch.img
 
 ../images/robocarstore_dk310_stretch.img:
 	@wget https://www.dropbox.com/s/raw/z8uhfoetlxwpsua/robocarstore_dk310_stretch.img.gz -O robocarstore_dk310_stretch.img.gz
-	@gunzip robocarstore_dk310_stretch.img.gz && rm robocarstore_dk310_stretch.img.gz
+	@gunzip robocarstore_dk310_stretch.img.gz
 	@mkdir -p $(IMAGES_DIR)
 	@mv robocarstore_dk310_stretch.img $(IMAGES_DIR)
 

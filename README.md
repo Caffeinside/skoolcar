@@ -1,10 +1,18 @@
 # Skoolcar
-Project created for the Skool AI to participe in the IronCar autonomous car competition
+Project created for the Skool AI to participate in the IronCar autonomous car competition
 
+
+# Table of Contents
+1. [Car Bootstrapping](#car-bootstrapping)
+2. 
 
 ## Car Bootstrapping
 
 ### Hardware
+The hardware can be set up through the following steps.
+
+It can also be set up with the Makefile described in part [Tips: use Makefile to set up the Hardware](#tips:use-makefile-to-set-up-the-hardware).
+
 
 #### Format SD card to reinstall Rasbian
 ##### Identify SD card
@@ -33,12 +41,21 @@ $ diskutil list
 Look for a disk named `SDCARD` like in the following picture:
 ![diskutil-list-SDCARD](docs/diskutil-list-SDCARD.png)
 
+##### Download a Raspbian image
+It exists a lot of Raspbian images able to run on Raspberry. Here is an non exhaustive list:
+- Raspbian lite available [here](https://www.raspberrypi.org/downloads/raspbian/)
+- Donkey Car v3.1.0 on Stretch available [here](https://docs.robocarstore.com/guide/robot_sbc/setup_raspberry_pi/)
+- Hypriot OS available [here](https://blog.hypriot.com/getting-started-with-docker-and-linux-on-the-raspberry-pi/)
+
 ##### Flash a Raspbian image
+Choose a Raspbian image, download it and then flash it on the SD card as followed:
 ```shell script
-$ sudo dd if=/Users/baptiste.ojeanson/Downloads/RPI-IMAGE-TO-FLASH.img of=/dev/disk2 bs=1024
+$ sudo dd if=/PATH/TO/RPI_IMAGE/RPI-IMAGE-TO-FLASH.img of=/dev/disk2 bs=1024
 ```
-`RPI-IMAGE-TO-FLASH.img`:
+
+The `RPI-IMAGE-TO-FLASH.img` image can be:
 - `2019-09-26-raspbian-buster-lite.img`
+- `robocarstore_dk310_stretch.img`
 - `hypriotos-rpi-v1.11.1.img`
 
 
@@ -74,24 +91,42 @@ network={
 #### Use SSH key to connect to the Raspberry
 Once the Raspberry is up, try to connect to it with the following command:
 ```shell script
-$ ssh pirate@black-pearl.local
+$ ssh USER@HOSTNAME
 ```
-`pirate` is the user on the Raspberry to use and `black-pearl.local` the hostname.
+
+Depending on the image usage, here are the values taken by `USER` and `HOSTNAME`:
+- For Raspbian Lite and Donkey Car v3.1.0 on Stretch: the user is`pi`, the hostname is `raspberrypi.local` and the password is `raspberry`
+- For Hypriot OS: the user is `pirate`, the hostname is `black-pearl.local` and the password is `hyprios` 
 
 Generate an ssh key pair: a public and a private key.
 ```shell script
 $ ssh-keygen -o -t rsa -b 4096 -C "email@domain.com"
 ```
-Once generated, put the keys in the `$HOME/.ssh/` directory under the names **hypriot_id_rsa** and **hypriot_id_rsa.pub**.
+Once generated, put the keys in the `$HOME/.ssh/` directory under the names **MY_PRIVATE_KEY_NAME_id_rsa** and **MY_PUBLIC_KEY_NAME_id_rsa.pub**.
 
-Then, use the following command to put the public key inside the `authorized_keys` file on the Raspberry. This will 
+Then, use the following command to put the **PUBLIC** key inside the `authorized_keys` file on the Raspberry. This will 
 allow to use the private key to log onto the Raspberry without login and password each time.
 ```shell script
-$ ssh-copy-id -i $HOME/.ssh/hypriot_id_rsa USER@HOSTNAME -f
+$ ssh-copy-id -i $HOME/.ssh/MY_PRIVATE_KEY_NAME_id_rsa USER@HOSTNAME -f
 ```
-
+---
+**NOTE**
+When using the `ssh-copy-id` command, it is the path to the private key which need to be provided.
+---
 
 Tutorial followed: http://docs.robocarstore.com/ (documentation provided by the store we bought the car from)
+
+### Tips: use Makefile to set up the Hardware
+Before typing the following command, check that the SD card is effectively mounted on `/dev/disk2`, by typing:
+```shell script
+$ diskutil list 
+```
+If the SD card is mount on another disk, edit the Makefile replacing all `/dev/disk2` occurrences by the disk seen thanks to `diskutil` command.
+
+Then, go in the deployment directory and type:
+```shell script
+$ make flash-robocarstore-on-sd-card 
+```
 
 ### Software
 
