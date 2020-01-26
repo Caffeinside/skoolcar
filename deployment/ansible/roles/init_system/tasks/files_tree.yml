@@ -1,0 +1,42 @@
+---
+
+- name: Create IRONCAR bin directory
+  file:
+    path: "/opt/ironcar/bin/"
+    state: directory
+    owner: "{{ ironcar_daemon_name }}"
+    group: "{{ ironcar_daemon_name }}"
+    mode: u=rwx,g=rX,o=rX
+
+- name: Create IRONCAR etc directory
+  file:
+    path: "{{ ironcar_etc_dir }}"
+    state: directory
+    owner: "{{ ironcar_daemon_name }}"
+    group: "{{ ironcar_daemon_name }}"
+    mode: u=rwX,g=rX,o=rX
+
+- name: Create IRONCAR var directory
+  file:
+    path: "{{ ironcar_var_dir }}"
+    state: directory
+    owner: "{{ ironcar_daemon_name }}"
+    group: "{{ ironcar_storage_group_name }}"
+    mode: u=rwX,g=rwX,o=rX
+    recurse: true
+
+- name: Create path for the startup file for IRONCAR application at session login
+  file:
+    path: /home/{{ ironcar_user_name }}/.config/autostart/
+    state: directory
+    owner: "{{ ironcar_user_name }}"
+    group: "{{ ironcar_user_name }}"
+
+- name: Create IRONCAR Desktop directory
+  file:
+    path: /home/{{ item }}/Desktop
+    state: directory
+    owner: "{{ item }}"
+    group: "{{ item }}"
+  with_items:
+    - "{{ ironcar_admin_user_name }}"

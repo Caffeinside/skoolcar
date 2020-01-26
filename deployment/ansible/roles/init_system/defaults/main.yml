@@ -1,0 +1,12 @@
+---
+ironcar_user_name: "ironcar"
+ironcar_admin_user_name: "ironcaradmin"
+ironcar_admin_user_list:
+  - "{{ ironcar_admin_user_name }}"
+  - "bapo"
+ironcar_daemon_name: "ironcard"
+ironcar_password: "ironcar"
+ironcar_storage_group_name: "ironcar_storage"
+ironcar_storage_group_gid: 1100
+ironcar_etc_dir: "/etc/ironcar"
+ironcar_var_dir: "/storage/ironcar"

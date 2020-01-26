@@ -1,0 +1,10 @@
+{% for user in ironcar_admin_user_list %}
+{{ user }} ALL=NOPASSWD: /bin/systemctl start ironcar.service
+{{ user }} ALL=NOPASSWD: /bin/systemctl stop ironcar.service
+{{ user }} ALL=NOPASSWD: /bin/systemctl restart ironcar.service
+
+{% endfor %}
+
+{{ ironcar_user_name }} ALL=NOPASSWD: /bin/systemctl start ironcar.service
+{{ ironcar_user_name }} ALL=NOPASSWD: /bin/systemctl stop ironcar.service
+{{ ironcar_user_name }} ALL=NOPASSWD: /bin/systemctl restart ironcar.service

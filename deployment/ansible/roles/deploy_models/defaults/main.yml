@@ -1,0 +1,5 @@
+---
+# defaults file for deploy_models
+ironcar_model_dir: "/opt/ironcar/models"
+model_src_dir: "models/"
+ironcar_daemon_name: "ironcard"

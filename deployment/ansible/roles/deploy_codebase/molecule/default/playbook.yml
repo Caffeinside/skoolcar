@@ -1,0 +1,8 @@
+---
+- name: Converge
+  hosts: edge_stations
+  vars:
+    aivi_password: "aivi"
+    app_archive_name: "../molecule/default/files/fake_aivi.tar.gz"
+  roles:
+    - role: deploy_codebase

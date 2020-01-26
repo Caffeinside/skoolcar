@@ -1,0 +1,8 @@
+---
+
+- name: Start service IRONCAR
+  service:
+    name: ironcar
+    state: restarted
+    enabled: true
+  changed_when: false

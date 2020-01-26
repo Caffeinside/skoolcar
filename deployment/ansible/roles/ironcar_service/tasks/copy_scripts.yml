@@ -1,0 +1,17 @@
+---
+
+- name: Copy IRONCAR script
+  template:
+    src: ironcar.sh.j2
+    dest: "/opt/ironcar/bin/ironcar.sh"
+    owner: "{{ ironcar_daemon_name }}"
+    group: "{{ ironcar_daemon_name }}"
+    mode: u=rwx,g=rx,o=rx
+
+- name: Copy stop processes script
+  copy:
+    src: stop.sh
+    dest: "/opt/ironcar/bin/stop.sh"
+    owner: "{{ ironcar_daemon_name }}"
+    group: "{{ ironcar_daemon_name }}"
+    mode: u=rwx,g=rx,o=rx

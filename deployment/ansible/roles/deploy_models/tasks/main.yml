@@ -1,0 +1,18 @@
+---
+# tasks file for deploy_models
+
+- name: Create model directory
+  file:
+    path: "{{ ironcar_model_dir }}"
+    state: directory
+    owner: "{{ ironcar_daemon_name }}"
+    group: "{{ ironcar_daemon_name }}"
+    mode: u=rwx,g=rX,o=rX
+
+- name: Copy models
+  copy:
+    src: "{{ model_src_dir }}"
+    dest: "{{ ironcar_model_dir }}"
+    owner: "{{ ironcar_daemon_name }}"
+    group: "{{ ironcar_daemon_name }}"
+    mode: u=rw,g=r,o=r

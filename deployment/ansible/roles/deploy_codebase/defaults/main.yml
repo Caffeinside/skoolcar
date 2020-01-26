@@ -1,0 +1,5 @@
+---
+ironcar_user_name: "ironcar"
+ironcar_daemon_name: "ironcard"
+app_version: "0.0.0"
+app_archive_name: "{{ app_name }}-{{ app_version }}.tar.gz"

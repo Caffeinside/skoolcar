@@ -1,0 +1,17 @@
+---
+
+- name: Copy scripts to start manually IRONCAR
+  import_tasks: copy_scripts.yml
+  tags: scripts
+
+- name: Prepare IRONCAR service
+  import_tasks: service.yml
+  tags: service
+
+- name: Start IRONCAR service
+  import_tasks: start_ironcar.yml
+  tags: service
+
+- name: Check status IRONCAR service
+  import_tasks: health_check.yml
+  tags: health

@@ -1,0 +1,49 @@
+---
+- name: Create group ironcar_storage
+  group:
+    name: "{{ ironcar_storage_group_name }}"
+    state: present
+    gid: "{{ ironcar_storage_group_gid }}"
+
+- name: Create ironcar user
+  user:
+    name: "{{ ironcar_user_name }}"
+    state: present
+    create_home: true
+    update_password: on_create
+    password: "{{ ironcar_password | password_hash('sha512') }}"
+    home: "/home/{{ ironcar_user_name }}"
+
+- name: Create admin users
+  user:
+    name: "{{ item }}"
+    state: present
+    create_home: false
+    update_password: always
+    home: "/home/{{ item }}"
+  with_items:
+    - "{{ ironcar_admin_user_list }}"
+
+- name: Set up authorized_keys for the user ironcar
+  authorized_key:
+    user: "{{ ironcar_user_name }}"
+    key: "{{ item }}"
+    path: "/home/ironcar/.ssh"
+  with_file:
+    - public_keys/ironcar_id_rsa.pub
+
+- name: Create ironcar-daemon user
+  user:
+    name: "{{ ironcar_daemon_name }}"
+    state: present
+    create_home: false
+    groups: "{{ ironcar_storage_group_name }}"
+
+#- name: Disallow password authentication
+#  lineinfile:
+#    dest: /etc/ssh/sshd_config
+#    regexp: "^PasswordAuthentication"
+#    line: "PasswordAuthentication no"
+#    state: present
+#  notify:
+#    - restart ssh

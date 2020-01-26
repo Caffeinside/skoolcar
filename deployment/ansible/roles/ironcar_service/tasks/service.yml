@@ -1,0 +1,21 @@
+---
+
+- name: Push IRONCAR service unit-file
+  copy:
+    src: ironcar.service
+    dest: "/etc/systemd/system/ironcar.service"
+    owner: "root"
+    group: "root"
+  notify: reload daemon
+
+- meta: flush_handlers
+
+- name: Stop IRONCAR related services
+  command: bash /opt/ironcar/bin/stop.sh
+  changed_when: false
+
+- name: Enable service IRONCAR
+  service:
+    name: ironcar
+    enabled: true
+  changed_when: false

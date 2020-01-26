@@ -163,3 +163,10 @@ Password: skoolcar
 
 ### Remote control with XBox controler
 apt-get install xboxdrv joystick
+
+
+### Automated deployment with Ansible
+```shell script
+$ ansible-playbook site.yml -i inventories/inv.ini --ask-pass
+```
+ 

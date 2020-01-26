@@ -1,0 +1,12 @@
+---
+- name: Create users and groups
+  import_tasks: users_and_groups.yml
+  tags: users
+
+- name: Allow aivi to run specific commands as sudo
+  import_tasks: sudoers.yml
+  tags: sudo
+
+- name: Create necessary folders to run aivi app
+  import_tasks: files_tree.yml
+  tags: files-tree

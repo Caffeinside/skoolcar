@@ -1,0 +1,10 @@
+---
+ironcar_user_name: "ironcar"
+ironcar_daemon_name: "ironcard"
+ironcar_storage_group_name: "ironcar_storage"
+app_version: "0.0.0"
+ironcar_etc_dir: "/etc/ironcar"
+ironcar_service_etc_dir: "{{ ironcar_etc_dir }}/inference"
+ironcar_var_dir: "/storage/ironcar/"
+ironcar_model_dir: "/opt/ironcar/models"
+target_url: "http://localhost:5000"

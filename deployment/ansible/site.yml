@@ -1,0 +1,23 @@
+---
+- name: Setuping the raspberry
+  hosts: raspberrypi
+  remote_user: pi
+  become: true
+  tags:
+    - setup
+  roles:
+    - { role: base, tags: base }
+    - { role: init_system, tags: init_system }
+
+- name: Deploy IRONCAR
+  hosts: raspberrypi
+  remote_user: ironcaradmin
+  become: true
+  vars:
+    app_archive_name: "ironcar-{{ app_version }}.tar.gz"
+  tags:
+    - ironcar_deploy
+  roles:
+    - { role: deploy_models, tags: deploy_models }
+    - { role: deploy_codebase, tags: deploy_codebase }
+    - { role: ironcar_service, tags: ironcar_service }

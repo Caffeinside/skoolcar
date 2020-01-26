@@ -1,0 +1,10 @@
+---
+
+- name: Check status IRONCAR service
+  uri:
+    url: http://localhost:5000/ironcar/health
+    method: GET
+  register: health_response
+  retries: 10
+  delay: 5
+  until: health_response.status == 200

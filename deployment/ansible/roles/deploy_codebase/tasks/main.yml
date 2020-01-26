@@ -1,0 +1,26 @@
+---
+- name: Create ironcar opt version directory
+  file:
+    path: "/opt/ironcar/{{ app_version }}/"
+    state: directory
+    owner: "{{ ironcar_daemon_name }}"
+    group: "{{ ironcar_daemon_name }}"
+    mode: u=rwX,g=rX,o=rX
+
+- name: Extract artifact
+  unarchive:
+    src: "{{ app_archive_name }}"
+    dest: "/opt/ironcar/{{ app_version }}"
+    creates: "/opt/ironcar/{{ app_version }}/lib/python3.7/site-packages/ironcar-{{ app_version }}-py3.6.egg/ironcar"
+    owner: "{{ ironcar_daemon_name }}"
+    group: "{{ ironcar_daemon_name }}"
+    mode: u=rwX,g=rX,o=rX
+
+- name: Create symbolic link to current version directory
+  file:
+    src: "/opt/ironcar/{{ app_version }}"
+    dest: "/opt/ironcar/current"
+    state: link
+    owner: "{{ ironcar_daemon_name }}"
+    group: "{{ ironcar_daemon_name }}"
+    mode: u=rwX,g=rX,o=rX
